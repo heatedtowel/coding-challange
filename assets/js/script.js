@@ -54,7 +54,8 @@ button.addEventListener("click", function () {
 });
 
 next.addEventListener("click", function() {
-  if (i <= 4) {
+  if (i < 3) {
+  increment();
   quiz(); 
 } else {
   pane2.style.display = 'none';
@@ -63,7 +64,8 @@ next.addEventListener("click", function() {
 });
 
 function increment() {
-  i++;
+  i = i + 1;
+  console.log(i)
 }
 
 function setCounter(num) {
@@ -90,21 +92,6 @@ function setTime() {
 function quiz () {
   pane1.style.display = 'none';
   pane2.style.display = 'unset';
-  var timerInterval = setInterval(increment, 1000);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   questiontext.textContent = questions[i].question;
   answer1.textContent = questions[i].answer[0];
   answer2.textContent = questions[i].answer[1];
