@@ -33,15 +33,19 @@ section {
 }
 
 #pane-1 {
+  top: 25em;
   text-align: center;
   position: absolute;
+  z-index: 1;
 }
 
-.answer1,
-.answer2,
-.answer3,
-.answer4 {
+.answer {
   cursor: pointer;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: #DFE7FD;
+  width:fit-content;
 }
 
 
@@ -64,8 +68,7 @@ h4 {
   width:fit-content;
 }
 
-#button,
-#submit {
+#button {
   display: inline-block;
   font-size: 30px;
   font-weight: 600;
@@ -78,6 +81,21 @@ h4 {
   #FAD2E1, 0 0 0.5em 0
   #FAD2E1;
   position: relative;
+}
+
+.next {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 600;
+    color: #black;
+    border: #BEE1E6 .125em solid;
+    padding: .125em .5em;
+    border-radius: .25em;
+    text-shadow: 0 0 0.125em white,0 0 0.125em currentColor;
+    box-shadow: inset 0 0 0.5em 0
+    #FAD2E1, 0 0 0.5em 0
+    #FAD2E1;
+    position: relative;
 }
 
 #submit {
@@ -95,7 +113,7 @@ h4 {
   position: relative;
 }
 
-button::before {
+#button::before {
   content: '';
   position: absolute;
   background-color: #FAD2E1;
@@ -103,13 +121,12 @@ button::before {
   left: 0;
   width: 100%;
   height: 100%;
-
   transform: perspective(1em) rotateX(40deg) scale(1, .25);
   filter: blur(1em);
 
 }
 
-button:hover {
+#button:hover {
   color: #FAD2E1;
   background-color: #CDDAFD;
 }
@@ -128,7 +145,5 @@ button:hover {
   display: inline-block;
   padding: .125em .5em;
   text-shadow: 3px 3px 3px #EAE4E9;
-  #FAD2E1, 0 0 0.5em 0
-  #FAD2E1;
   position: relative;
 }
