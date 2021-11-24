@@ -37,9 +37,13 @@ section {
   position: absolute;
 }
 
-#pane-2 {
-  padding: 0 200px;
+.answer1,
+.answer2,
+.answer3,
+.answer4 {
+  cursor: pointer;
 }
+
 
 section > div > h1 {
   font-size: 30px;
@@ -60,9 +64,25 @@ h4 {
   width:fit-content;
 }
 
-button {
+#button,
+#submit {
   display: inline-block;
   font-size: 30px;
+  font-weight: 600;
+  color: #FAD2E1;
+  border: #BEE1E6 .125em solid;
+  padding: .125em .5em;
+  border-radius: .25em;
+  text-shadow: 0 0 0.125em white,0 0 0.125em currentColor;
+  box-shadow: inset 0 0 0.5em 0
+  #FAD2E1, 0 0 0.5em 0
+  #FAD2E1;
+  position: relative;
+}
+
+#submit {
+  display: inline-block;
+  font-size: 20px;
   font-weight: 600;
   color: #FAD2E1;
   border: #BEE1E6 .125em solid;
@@ -94,8 +114,21 @@ button:hover {
   background-color: #CDDAFD;
 }
 
-#confirmation {
+.confirmation {
+  margin-top: 5px;
   padding: 3px;
   border-top: 2px dashed #FAD2E1;
   color: #CDDAFD;
+}
+
+#game-over {
+  color: #BEE1E6;
+  font-size: 80px;
+  width: 100%;
+  display: inline-block;
+  padding: .125em .5em;
+  text-shadow: 3px 3px 3px #EAE4E9;
+  #FAD2E1, 0 0 0.5em 0
+  #FAD2E1;
+  position: relative;
 }
