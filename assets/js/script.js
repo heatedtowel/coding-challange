@@ -4,13 +4,14 @@ var pane2 = document.querySelector("#pane-2")
 var timer = document.querySelector('#time')
 var button = document.querySelector("#button")
 var confirm = document.querySelector(".confirmation")
-var gameover = document.querySelector(".game-over")
+var gameover = document.querySelector(".end-text")
 var next = document.querySelector(".next")
 var answer = document.querySelectorAll(".answer")
 
 pane2.style.display = 'none';
 var secondsRemaining = 60;
 var currentQuestion = 0;
+var score = 0;
 
 var questions = [
   {
@@ -28,19 +29,22 @@ var questions = [
   }, {
     question: 'What is the correct HTML for inserting an image?',
     answer: ['Img alt="MyImage" image.gif /img',
-            'Image src="image.gif" alt="MyImage"',
-            'Img src="image.gif" alt="MyImage"',
-            'Img href="image.gif" alt="MyImage"'],
+      'Image src="image.gif" alt="MyImage"',
+      'Img src="image.gif" alt="MyImage"',
+      'Img href="image.gif" alt="MyImage"'],
     correctAnswer: 2
   }];
 
 
-button.addEventListener("click", function () {
+  document.querySelector('#button').addEventListener("click", function () {
   setTime();
   quiz();
 });
 
-function increment() {
+
+
+function nextQuestion() {
+  console.log('next question');
   currentQuestion++;
   quiz()
 };
@@ -57,29 +61,41 @@ function setTime() {
     if (secondsRemaining === 0) {
       clearInterval(timerInterval);
       pane2.style.display = 'none';
-      document.getElementById('game-over').textContent = 'Game Over';
+      document.getElementById('end-text').textContent = 'Game Over';
     }
-
   }, 1000);
 };
 
 
+
+
+
+
 function quiz() {
+  console.log('start of quiz');
+
   pane1.style.display = 'none';
   pane2.style.display = 'unset';
-  questiontext.textContent = questions[currentQuestion].question; 
-  confirm.textContent = '';
 
-
-  for (var i = 0; i < questions[currentQuestion].answer.length; i++) {
-    document.querySelector(`#answer${i + 1}`).textContent = questions[currentQuestion].answer[i];
-    document.querySelector(`#answer${i + 1}`).addEventListener("click", function () {
-      if (this.textContent === questions[currentQuestion].answer[questions[currentQuestion].correctAnswer]) {
-        confirm.textContent = 'Correct!'
-        setTimeout(increment, 500);
-      } else {
-        secondsRemaining -= 10;
-      }
-    })
-  }
+  if (currentQuestion < questions.length) {
+    questiontext.textContent = questions[currentQuestion].question;
+    confirm.textContent = '';
+    
+    for (var i = 0; i < questions[currentQuestion].answer.length; i++) {
+      document.querySelector(`#answer${i + 1}`).textContent = questions[currentQuestion].answer[i];
+      document.querySelector(`#answer${i + 1}`).addEventListener("click", function () {
+        if (this.textContent === questions[currentQuestion].answer[questions[currentQuestion].correctAnswer]) {
+          confirm.textContent = 'Correct!'
+          console.log('correct answer');
+          setTimeout(nextQuestion, 500);
+        } else {
+          secondsRemaining -= 10;
+          console.log('incorrect answer');
+        };
+      });
+    };
+  } else {
+    pane2.style.display = 'none';
+    document.getElementById('end-text').textContent = 'You Win!';
+  };
 };
