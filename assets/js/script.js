@@ -8,10 +8,12 @@ var gameover = document.querySelector(".end-text")
 var next = document.querySelector(".next")
 var answer = document.querySelectorAll(".answer")
 
-pane2.style.display = 'none';
 var secondsRemaining = 60;
 var currentQuestion = 0;
 var score = 0;
+var selectedAnswer
+
+pane2.style.display = 'none';
 
 var questions = [
   {
@@ -36,17 +38,34 @@ var questions = [
   }];
 
 
-  document.querySelector('#button').addEventListener("click", function () {
+document.querySelector('#button').addEventListener("click", function () {
   setTime();
-  quiz();
+  setQuestions();
 });
 
+for (var i = 0; i < questions[currentQuestion].answer.length; i++) {
+  document.querySelector(`#answer${i + 1}`).addEventListener("click", function () {
+    checkAnswer()
+  })
+};
 
+function chosenAnswer(clicked_id) {
+  selectedAnswer = clicked_id
+};
+
+function checkAnswer() {
+  if (selectedAnswer === questions[currentQuestion].correctAnswer) {
+    confirm.textContent = 'Correct!'
+    setTimeout(nextQuestion, 500);
+  } else {
+    confirm.textContent = 'Incorrect try again!'
+    secondsRemaining -= 10;
+  };
+};
 
 function nextQuestion() {
-  console.log('next question');
   currentQuestion++;
-  quiz()
+  setQuestions()
 };
 
 function setCounter(num) {
@@ -62,40 +81,27 @@ function setTime() {
       clearInterval(timerInterval);
       pane2.style.display = 'none';
       document.getElementById('end-text').textContent = 'Game Over';
+    } else if (currentQuestion === 4) {
+      clearInterval(timerInterval);
+      score = secondsRemaining;
+      document.getElementById('end-text').textContent = 'Congratulations you scored ' + score + ' points!';
+      console.log(score);
     }
   }, 1000);
 };
 
-
-
-
-
-
-function quiz() {
-  console.log('start of quiz');
-
+function setQuestions() {
   pane1.style.display = 'none';
   pane2.style.display = 'unset';
 
   if (currentQuestion < questions.length) {
     questiontext.textContent = questions[currentQuestion].question;
     confirm.textContent = '';
-    
+
     for (var i = 0; i < questions[currentQuestion].answer.length; i++) {
       document.querySelector(`#answer${i + 1}`).textContent = questions[currentQuestion].answer[i];
-      document.querySelector(`#answer${i + 1}`).addEventListener("click", function () {
-        if (this.textContent === questions[currentQuestion].answer[questions[currentQuestion].correctAnswer]) {
-          confirm.textContent = 'Correct!'
-          console.log('correct answer');
-          setTimeout(nextQuestion, 500);
-        } else {
-          secondsRemaining -= 10;
-          console.log('incorrect answer');
-        };
-      });
-    };
+    }
   } else {
     pane2.style.display = 'none';
-    document.getElementById('end-text').textContent = 'You Win!';
   };
 };
