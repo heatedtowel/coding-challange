@@ -10,6 +10,7 @@ var secondsRemaining = 60;
 var currentQuestion = 0;
 var score = 0;
 var selectedAnswer
+var timePaused
 
 var questions = [
   {
@@ -31,12 +32,21 @@ var questions = [
       'Img src="image.gif" alt="MyImage"',
       'Img href="image.gif" alt="MyImage"'],
     correctAnswer: 2
-  }];
+  }, {
+    question: "How would you change this HTML element? <p id=\"demo\">Code Quiz</p>",
+    answer: ['document.getElement("p").innerHTML = "Hello World"',
+      '#demo.innerHTML = "Hello World"',
+      'document.getElementById("demo").innerHTML = "Hello World"',
+      'document.getElementByName("p").innerHTML = "Hello World"'],
+    correctAnswer: 2
+  }
+];
 
 pane2.style.display = 'none';
 
 
 init();
+addListeners();
 
 function init() {
   button.addEventListener("click", function () {
@@ -45,22 +55,23 @@ function init() {
   });
 }
 
-function chosenAnswer(clicked_id) {
-  selectedAnswer = clicked_id;
-};
-
 function checkAnswer() {
   if (selectedAnswer === questions[currentQuestion].correctAnswer) {
     confirm.textContent = 'Correct!'
-    setTimeout(nextQuestion, 500);
+    timePaused = true;
+    setTimeout(nextQuestion, 1000);
   } else {
     confirm.textContent = 'Incorrect'
     secondsRemaining -= 10;
+    if (secondsRemaining < 0) {
+      secondsRemaining = 0;
+    }
   };
 };
 
 function nextQuestion() {
   currentQuestion++;
+  timePaused = false;
   setQuestions()
 };
 
@@ -71,14 +82,20 @@ function setCounter(num) {
 function setTime() {
   setCounter(secondsRemaining);
   var timerInterval = setInterval(function () {
+    if (timePaused) {
+      return
+    }
     secondsRemaining--;
+    if (secondsRemaining < 0) {
+      secondsRemaining = 0;
+    }
     setCounter(secondsRemaining);
-    if (secondsRemaining === 0) {
+    if (secondsRemaining <= 0) {
       clearInterval(timerInterval);
       pane2.style.display = 'none';
       document.getElementById('end-text').textContent = 'Game Over';
       localStorage.setItem("Score", score)
-    } else if (currentQuestion === 4) {
+    } else if (currentQuestion === questions.length) {
       clearInterval(timerInterval);
       score = secondsRemaining;
       document.getElementById('end-text').textContent = 'Congratulations you scored ' + score + ' points!';
@@ -87,10 +104,13 @@ function setTime() {
   }, 1000);
 };
 
+function leaderboard() {
+
+}
+
 function setQuestions() {
   pane1.style.display = 'none';
   pane2.style.display = 'unset';
-  addListeners();
 
   if (currentQuestion < questions.length) {
     questiontext.textContent = questions[currentQuestion].question;
@@ -106,7 +126,9 @@ function setQuestions() {
 function addListeners() {
   for (var i = 0; i < questions[currentQuestion].answer.length; i++) {
     document.querySelector(`#answer${i + 1}`).addEventListener("click", function () {
+      selectedAnswer = parseInt(this.value)
       checkAnswer()
     })
   };
 }
+
