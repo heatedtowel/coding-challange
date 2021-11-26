@@ -39,7 +39,12 @@ section {
   z-index: 1;
 }
 
+.question {
+  padding: 5px;
+}
+
 .answer {
+  font-size: 20px;
   cursor: pointer;
   padding: 5px;
   margin: 10px;
@@ -49,58 +54,18 @@ section {
 }
 
 
-section > div > h1 {
-  font-size: 30px;
+#pane-1 > h1 {
+  font-size: 40px;
   text-align: center;
   padding: 20px;
-}
-h3 {
-  padding: 5px;
-  font-weight: 600;
-  border-radius: 10px;
-}
-
-h4 {
-  padding: 5px;
-  margin: 10px;
-  border-radius: 10px;
-  background-color: #DFE7FD;
-  width:fit-content;
+  color: #CDDAFD;
+  text-shadow: 2px 2px #0009;
 }
 
 #button {
+  cursor: pointer;
   display: inline-block;
   font-size: 30px;
-  font-weight: 600;
-  color: #FAD2E1;
-  border: #BEE1E6 .125em solid;
-  padding: .125em .5em;
-  border-radius: .25em;
-  text-shadow: 0 0 0.125em white,0 0 0.125em currentColor;
-  box-shadow: inset 0 0 0.5em 0
-  #FAD2E1, 0 0 0.5em 0
-  #FAD2E1;
-  position: relative;
-}
-
-.next {
-    display: inline-block;
-    font-size: 15px;
-    font-weight: 600;
-    color: #000;
-    border: #BEE1E6 .125em solid;
-    padding: .125em .5em;
-    border-radius: .25em;
-    text-shadow: 0 0 0.125em white,0 0 0.125em currentColor;
-    box-shadow: inset 0 0 0.5em 0
-    #FAD2E1, 0 0 0.5em 0
-    #FAD2E1;
-    position: relative;
-}
-
-#submit {
-  display: inline-block;
-  font-size: 20px;
   font-weight: 600;
   color: #FAD2E1;
   border: #BEE1E6 .125em solid;
@@ -127,8 +92,10 @@ h4 {
 }
 
 #button:hover {
-  color: #FAD2E1;
-  background-color: #CDDAFD;
+  background-color: #FAD2E1;
+  color: #7dacb4;
+  transition: all, 3s;
+  
 }
 
 .confirmation {

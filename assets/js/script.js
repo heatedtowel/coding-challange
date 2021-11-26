@@ -5,19 +5,15 @@ var timer = document.querySelector('#time')
 var button = document.querySelector("#button")
 var confirm = document.querySelector(".confirmation")
 var gameover = document.querySelector(".end-text")
-var next = document.querySelector(".next")
 var answer = document.querySelectorAll(".answer")
-
 var secondsRemaining = 60;
 var currentQuestion = 0;
 var score = 0;
 var selectedAnswer
 
-pane2.style.display = 'none';
-
 var questions = [
   {
-    question: 'Which font-weight is not valid value?',
+    question: 'Which font-weight is a not valid value?',
     answer: ['normal', 'bold', 'lightest', 'bolder'],
     correctAnswer: 2
   }, {
@@ -37,20 +33,20 @@ var questions = [
     correctAnswer: 2
   }];
 
+pane2.style.display = 'none';
 
-document.querySelector('#button').addEventListener("click", function () {
-  setTime();
-  setQuestions();
-});
 
-for (var i = 0; i < questions[currentQuestion].answer.length; i++) {
-  document.querySelector(`#answer${i + 1}`).addEventListener("click", function () {
-    checkAnswer()
-  })
-};
+init();
+
+function init() {
+  button.addEventListener("click", function () {
+    setTime();
+    setQuestions();
+  });
+}
 
 function chosenAnswer(clicked_id) {
-  selectedAnswer = clicked_id
+  selectedAnswer = clicked_id;
 };
 
 function checkAnswer() {
@@ -58,7 +54,7 @@ function checkAnswer() {
     confirm.textContent = 'Correct!'
     setTimeout(nextQuestion, 500);
   } else {
-    confirm.textContent = 'Incorrect try again!'
+    confirm.textContent = 'Incorrect'
     secondsRemaining -= 10;
   };
 };
@@ -81,11 +77,12 @@ function setTime() {
       clearInterval(timerInterval);
       pane2.style.display = 'none';
       document.getElementById('end-text').textContent = 'Game Over';
+      localStorage.setItem("Score", score)
     } else if (currentQuestion === 4) {
       clearInterval(timerInterval);
       score = secondsRemaining;
       document.getElementById('end-text').textContent = 'Congratulations you scored ' + score + ' points!';
-      console.log(score);
+      localStorage.setItem("Score", score)
     }
   }, 1000);
 };
@@ -93,11 +90,11 @@ function setTime() {
 function setQuestions() {
   pane1.style.display = 'none';
   pane2.style.display = 'unset';
+  addListeners();
 
   if (currentQuestion < questions.length) {
     questiontext.textContent = questions[currentQuestion].question;
     confirm.textContent = '';
-
     for (var i = 0; i < questions[currentQuestion].answer.length; i++) {
       document.querySelector(`#answer${i + 1}`).textContent = questions[currentQuestion].answer[i];
     }
@@ -105,3 +102,11 @@ function setQuestions() {
     pane2.style.display = 'none';
   };
 };
+
+function addListeners() {
+  for (var i = 0; i < questions[currentQuestion].answer.length; i++) {
+    document.querySelector(`#answer${i + 1}`).addEventListener("click", function () {
+      checkAnswer()
+    })
+  };
+}
