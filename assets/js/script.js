@@ -9,18 +9,20 @@ var button = document.querySelector("#button")
 var confirm = document.querySelector(".confirmation")
 var answer = document.querySelectorAll(".answer")
 var leaderboard = document.querySelector("#leaderboard");
+var highscorebtn = document.querySelector("#highscore");
 var secondsRemaining = 60;
 var currentQuestion = 0;
 var score = 0;
 var selectedAnswer
 var timePaused
+var highscore = localStorage.getItem('Highscores')
 
 var questions = [
   {
     question: 'Which font-weight is a not valid value?',
     answer: ['normal', 'bold', 'lightest', 'bolder'],
     correctAnswer: 2
-  }/* , {
+  }, {
     question: 'Choose the correct HTML tag for the largest heading',
     answer: ['head', 'H1', 'H6', 'Heading'],
     correctAnswer: 1
@@ -42,8 +44,17 @@ var questions = [
       'document.getElementById("demo").innerHTML = "Hello World"',
       'document.getElementByName("p").innerHTML = "Hello World"'],
     correctAnswer: 2
-  } */
+  }
 ];
+
+var highscores = [
+  {
+    name: username,
+    score: score
+  }
+]
+
+highscorebtn.addEventListener('click', leaders);
 
 pane2.style.display = 'none';
 pane4.style.display = 'none';
@@ -138,6 +149,10 @@ function addListeners() {
 }
 
 function saveScore() {
+  pane1.style.display = 'none';
+  pane2.style.display = 'none';
+  pane3.style.display = 'none';
+  pane4.style.display = 'none';
   score = secondsRemaining;
   pane4.style.display = 'unset'
   document.querySelector('#submit').addEventListener('click', function () {
@@ -151,7 +166,6 @@ function saveScore() {
         }
       ]
       localStorage.setItem('Highscores', JSON.stringify(highscores))
-      document.getElementById("leaders").innerHTML = highscores.name;
     }
     highscore = JSON.parse(highscore)
     highscore.push({
@@ -161,20 +175,22 @@ function saveScore() {
     pane3.style.display = 'none';
     pane4.style.display = 'none';
     localStorage.setItem('Highscores', JSON.stringify(highscore))
-    for (var i = 0; i < highscore.length; i++) {
-      var h2 = document.createElement('h2');
-      console.log(highscore)
-      h2.textContent = highscore[i].name + " " +  highscore[i].score;
-      leaderboard.appendChild(h2);
-    }
+    leaders();
   });
 }
 
-/* function leaderboard() {
+
+  function leaders() {
   pane1.style.display = 'none';
   pane2.style.display = 'none';
   pane3.style.display = 'none';
   pane4.style.display = 'none';
-  var highscores = JSON.parse(localStorage.getItem("highcsores"));
-  document.getElementById("leaders").innerHTML = highscores.name;
-} */
+  highscore = JSON.parse(localStorage.getItem('Highscores'));
+  console.log(highscore)
+  for (var i = 0; i < highscore.length; i++) {
+    var h2 = document.createElement('h2');
+    h2.textContent = highscore[i].name + " " +  highscore[i].score;
+    leaderboard.appendChild(h2);
+  }
+}
+

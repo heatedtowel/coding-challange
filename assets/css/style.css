@@ -40,6 +40,10 @@ section {
   align-items: center;
 }
 
+#highscore:hover {
+  cursor: pointer;
+}
+
 #pane-1 {
   top: 25em;
   text-align: center;
