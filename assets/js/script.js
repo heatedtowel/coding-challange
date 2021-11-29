@@ -1,7 +1,7 @@
 var questiontext = document.querySelector("#question")
 var pane1 = document.querySelector("#pane-1")
 var pane2 = document.querySelector("#pane-2")
-var pane3 = document.querySelector("#pane-3")
+var pane3 = document.querySelectorAll("#pane-3")
 var pane4 = document.querySelector("#pane-4")
 var username = document.querySelector("#name")
 var timer = document.querySelector('#time')
@@ -10,12 +10,12 @@ var confirm = document.querySelector(".confirmation")
 var answer = document.querySelectorAll(".answer")
 var leaderboard = document.querySelector("#leaderboard");
 var highscorebtn = document.querySelector("#highscore");
-var secondsRemaining = 60;
+var highscore = localStorage.getItem('Highscores')
+var secondsRemaining = 25;
 var currentQuestion = 0;
 var score = 0;
 var selectedAnswer
 var timePaused
-var highscore = localStorage.getItem('Highscores')
 
 var questions = [
   {
@@ -118,6 +118,7 @@ function ending() {
     pane2.style.display = 'none';
     document.getElementById('pane-3').textContent = 'Game Over';
   } else {
+    console.log("!!!!!!!!!!!")
     document.getElementById('pane-3').textContent = 'Congratulations you scored ' + secondsRemaining + ' points!';
     saveScore();
   }
@@ -149,12 +150,8 @@ function addListeners() {
 }
 
 function saveScore() {
-  pane1.style.display = 'none';
-  pane2.style.display = 'none';
-  pane3.style.display = 'none';
-  pane4.style.display = 'none';
-  score = secondsRemaining;
   pane4.style.display = 'unset'
+  score = secondsRemaining;
   document.querySelector('#submit').addEventListener('click', function () {
     username = username.value;
     var highscore = localStorage.getItem('Highscores')
@@ -172,8 +169,8 @@ function saveScore() {
       name: username,
       score: score
     })
-    pane3.style.display = 'none';
     pane4.style.display = 'none';
+    document.getElementById('pane-3').style.display = 'none';
     localStorage.setItem('Highscores', JSON.stringify(highscore))
     for (var i = 0; i < highscore.length; i++) {
       var h2 = document.createElement('h2');
@@ -188,8 +185,8 @@ function saveScore() {
   function leaders() {
   pane1.style.display = 'none';
   pane2.style.display = 'none';
-  pane3.style.display = 'none';
-  pane4.style.display = 'none';
+  document.getElementById('pane-3').style.display = 'none';
+  pane4.style.display = 'none'; 
   highscore = JSON.parse(localStorage.getItem('Highscores'));
   console.log(highscore)
   for (var i = 0; i < highscore.length; i++) {
