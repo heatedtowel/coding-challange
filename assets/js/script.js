@@ -1,11 +1,14 @@
 var questiontext = document.querySelector("#question")
 var pane1 = document.querySelector("#pane-1")
 var pane2 = document.querySelector("#pane-2")
+var pane3 = document.querySelector("#pane-3")
+var pane4 = document.querySelector("#pane-4")
+var username = document.querySelector("#name")
 var timer = document.querySelector('#time')
 var button = document.querySelector("#button")
 var confirm = document.querySelector(".confirmation")
-var gameover = document.querySelector(".end-text")
 var answer = document.querySelectorAll(".answer")
+var leaderboard = document.querySelector("#leaderboard");
 var secondsRemaining = 60;
 var currentQuestion = 0;
 var score = 0;
@@ -17,7 +20,7 @@ var questions = [
     question: 'Which font-weight is a not valid value?',
     answer: ['normal', 'bold', 'lightest', 'bolder'],
     correctAnswer: 2
-  }, {
+  }/* , {
     question: 'Choose the correct HTML tag for the largest heading',
     answer: ['head', 'H1', 'H6', 'Heading'],
     correctAnswer: 1
@@ -39,10 +42,12 @@ var questions = [
       'document.getElementById("demo").innerHTML = "Hello World"',
       'document.getElementByName("p").innerHTML = "Hello World"'],
     correctAnswer: 2
-  }
+  } */
 ];
 
 pane2.style.display = 'none';
+pane4.style.display = 'none';
+
 
 
 init();
@@ -90,23 +95,23 @@ function setTime() {
       secondsRemaining = 0;
     }
     setCounter(secondsRemaining);
-    if (secondsRemaining <= 0) {
+    if (secondsRemaining <= 0 || currentQuestion === questions.length) {
       clearInterval(timerInterval);
-      pane2.style.display = 'none';
-      document.getElementById('end-text').textContent = 'Game Over';
-      localStorage.setItem("Score", score)
-    } else if (currentQuestion === questions.length) {
-      clearInterval(timerInterval);
-      score = secondsRemaining;
-      document.getElementById('end-text').textContent = 'Congratulations you scored ' + score + ' points!';
-      localStorage.setItem("Score", score)
+      ending();
     }
   }, 1000);
 };
 
-function leaderboard() {
-
+function ending() {
+  if (secondsRemaining <= 0) {
+    pane2.style.display = 'none';
+    document.getElementById('pane-3').textContent = 'Game Over';
+  } else {
+    document.getElementById('pane-3').textContent = 'Congratulations you scored ' + secondsRemaining + ' points!';
+    saveScore();
+  }
 }
+
 
 function setQuestions() {
   pane1.style.display = 'none';
@@ -132,3 +137,44 @@ function addListeners() {
   };
 }
 
+function saveScore() {
+  score = secondsRemaining;
+  pane4.style.display = 'unset'
+  document.querySelector('#submit').addEventListener('click', function () {
+    username = username.value;
+    var highscore = localStorage.getItem('Highscores')
+    if (typeof highscore === 'undefined' || highscore === null) {
+      var highscores = [
+        {
+          name: username,
+          score: score
+        }
+      ]
+      localStorage.setItem('Highscores', JSON.stringify(highscores))
+      document.getElementById("leaders").innerHTML = highscores.name;
+    }
+    highscore = JSON.parse(highscore)
+    highscore.push({
+      name: username,
+      score: score
+    })
+    pane3.style.display = 'none';
+    pane4.style.display = 'none';
+    localStorage.setItem('Highscores', JSON.stringify(highscore))
+    for (var i = 0; i < highscore.length; i++) {
+      var h2 = document.createElement('h2');
+      console.log(highscore)
+      h2.textContent = highscore[i].name + " " +  highscore[i].score;
+      leaderboard.appendChild(h2);
+    }
+  });
+}
+
+/* function leaderboard() {
+  pane1.style.display = 'none';
+  pane2.style.display = 'none';
+  pane3.style.display = 'none';
+  pane4.style.display = 'none';
+  var highscores = JSON.parse(localStorage.getItem("highcsores"));
+  document.getElementById("leaders").innerHTML = highscores.name;
+} */

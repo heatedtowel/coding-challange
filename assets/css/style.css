@@ -18,6 +18,14 @@ header {
   background-color: #EAE4E9;
 }
 
+footer {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 #time {
   font-size: 25px;
   font-weight: 500;
@@ -88,13 +96,13 @@ section {
   height: 100%;
   transform: perspective(1em) rotateX(40deg) scale(1, .25);
   filter: blur(1em);
-
 }
 
-#button:hover {
+#button:hover,
+#submit:hover {
   background-color: #FAD2E1;
   color: #7dacb4;
-  transition: all, 3s;
+  transition: all, 1.5s;
   
 }
 
@@ -105,12 +113,20 @@ section {
   color: #CDDAFD;
 }
 
-#end-text {
+#pane-3,
+#pane-4 {
   color: #BEE1E6;
-  font-size: 80px;
+  font-size: 60px;
   width: 100%;
   display: inline-block;
   padding: .125em .5em;
   text-shadow: 3px 3px 3px #EAE4E9;
-  position: relative;
+}
+
+input {
+  font-size: 20px;
+}
+
+#leaderboard {
+  text-align: left;
 }
