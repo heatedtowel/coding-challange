@@ -175,7 +175,12 @@ function saveScore() {
     pane3.style.display = 'none';
     pane4.style.display = 'none';
     localStorage.setItem('Highscores', JSON.stringify(highscore))
-    leaders();
+    for (var i = 0; i < highscore.length; i++) {
+      var h2 = document.createElement('h2');
+      console.log(highscore)
+      h2.textContent = highscore[i].name + " " +  highscore[i].score;
+      leaderboard.appendChild(h2);
+    }
   });
 }
 
