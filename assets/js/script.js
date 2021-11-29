@@ -22,7 +22,7 @@ var questions = [
     question: 'Which font-weight is a not valid value?',
     answer: ['normal', 'bold', 'lightest', 'bolder'],
     correctAnswer: 2
-  }, {
+  },/*  {
     question: 'Choose the correct HTML tag for the largest heading',
     answer: ['head', 'H1', 'H6', 'Heading'],
     correctAnswer: 1
@@ -44,15 +44,8 @@ var questions = [
       'document.getElementById("demo").innerHTML = "Hello World"',
       'document.getElementByName("p").innerHTML = "Hello World"'],
     correctAnswer: 2
-  }
+  } */
 ];
-
-var highscores = [
-  {
-    name: username,
-    score: score
-  }
-]
 
 highscorebtn.addEventListener('click', leaders);
 
@@ -118,11 +111,10 @@ function ending() {
     pane2.style.display = 'none';
     document.getElementById('pane-3').textContent = 'Game Over';
   } else {
-    console.log("!!!!!!!!!!!")
     document.getElementById('pane-3').textContent = 'Congratulations you scored ' + secondsRemaining + ' points!';
     saveScore();
   }
-}
+};
 
 
 function setQuestions() {
@@ -147,7 +139,7 @@ function addListeners() {
       checkAnswer()
     })
   };
-}
+};
 
 function saveScore() {
   pane4.style.display = 'unset'
@@ -163,12 +155,13 @@ function saveScore() {
         }
       ]
       localStorage.setItem('Highscores', JSON.stringify(highscores))
+      leaders();
     }
     highscore = JSON.parse(highscore)
     highscore.push({
       name: username,
       score: score
-    })
+    });
     pane4.style.display = 'none';
     document.getElementById('pane-3').style.display = 'none';
     localStorage.setItem('Highscores', JSON.stringify(highscore))
@@ -179,7 +172,7 @@ function saveScore() {
       leaderboard.appendChild(h2);
     }
   });
-}
+};
 
 
   function leaders() {
@@ -193,6 +186,6 @@ function saveScore() {
     var h2 = document.createElement('h2');
     h2.textContent = highscore[i].name + " " +  highscore[i].score;
     leaderboard.appendChild(h2);
-  }
-}
+  };
+};
 
