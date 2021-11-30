@@ -103,6 +103,7 @@ function setTime() {
     setCounter(secondsRemaining);
     if (secondsRemaining <= 0 || currentQuestion === questions.length) {
       clearInterval(timerInterval);
+      goback.style.display = 'none';
       ending();
     }
   }, 1000);
@@ -144,7 +145,6 @@ function addListeners() {
 };
 
 function saveScore() {
-  goback.style.display = 'none';
   pane4.style.display = 'unset'
   score = secondsRemaining;
   document.querySelector('#submit').addEventListener('click', function () {
