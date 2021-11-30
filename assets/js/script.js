@@ -11,6 +11,7 @@ var answer = document.querySelectorAll(".answer")
 var leaderboard = document.querySelector("#leaderboard");
 var highscorebtn = document.querySelector("#highscore");
 var highscore = localStorage.getItem('Highscores')
+var goback = document.querySelector('.goback')
 var secondsRemaining = 25;
 var currentQuestion = 0;
 var score = 0;
@@ -22,7 +23,7 @@ var questions = [
     question: 'Which font-weight is a not valid value?',
     answer: ['normal', 'bold', 'lightest', 'bolder'],
     correctAnswer: 2
-  },/*  {
+  }, {
     question: 'Choose the correct HTML tag for the largest heading',
     answer: ['head', 'H1', 'H6', 'Heading'],
     correctAnswer: 1
@@ -44,14 +45,18 @@ var questions = [
       'document.getElementById("demo").innerHTML = "Hello World"',
       'document.getElementByName("p").innerHTML = "Hello World"'],
     correctAnswer: 2
-  } */
+  }
 ];
 
 highscorebtn.addEventListener('click', leaders);
+goback.addEventListener('click', function() {
+  console.log('tset')
+  window.location.reload()
+});
 
 pane2.style.display = 'none';
 pane4.style.display = 'none';
-
+goback.style.display = 'none';
 
 
 init();
@@ -59,6 +64,7 @@ addListeners();
 
 function init() {
   button.addEventListener("click", function () {
+    goback.style.display = 'unset'
     setTime();
     setQuestions();
   });
@@ -155,7 +161,7 @@ function saveScore() {
         }
       ]
       localStorage.setItem('Highscores', JSON.stringify(highscores))
-      leaders();
+      return leaders();
     }
     highscore = JSON.parse(highscore)
     highscore.push({
@@ -168,24 +174,23 @@ function saveScore() {
     for (var i = 0; i < highscore.length; i++) {
       var h2 = document.createElement('h2');
       console.log(highscore)
-      h2.textContent = highscore[i].name + " " +  highscore[i].score;
+      h2.textContent = highscore[i].name + " " + highscore[i].score;
       leaderboard.appendChild(h2);
     }
   });
 };
 
 
-  function leaders() {
+function leaders() {
   pane1.style.display = 'none';
   pane2.style.display = 'none';
   document.getElementById('pane-3').style.display = 'none';
-  pane4.style.display = 'none'; 
+  pane4.style.display = 'none';
   highscore = JSON.parse(localStorage.getItem('Highscores'));
-  console.log(highscore)
   for (var i = 0; i < highscore.length; i++) {
     var h2 = document.createElement('h2');
-    h2.textContent = highscore[i].name + " " +  highscore[i].score;
-    leaderboard.appendChild(h2);
+    h2.textContent = highscore[i].name + " " + highscore[i].score;
+    leaderboard.body.appendChild(h2);
   };
 };
 

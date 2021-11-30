@@ -134,3 +134,7 @@ input {
 #leaderboard {
   text-align: left;
 }
+
+#goback {
+  z-index: 2;
+}
