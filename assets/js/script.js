@@ -48,11 +48,7 @@ var questions = [
   }
 ];
 
-highscorebtn.addEventListener('click', leaders);
-goback.addEventListener('click', function() {
-  console.log('tset')
-  window.location.reload()
-});
+
 
 pane2.style.display = 'none';
 pane4.style.display = 'none';
@@ -148,6 +144,7 @@ function addListeners() {
 };
 
 function saveScore() {
+  goback.style.display = 'none';
   pane4.style.display = 'unset'
   score = secondsRemaining;
   document.querySelector('#submit').addEventListener('click', function () {
@@ -168,29 +165,37 @@ function saveScore() {
       name: username,
       score: score
     });
+    goback.style.display = 'unset'
     pane4.style.display = 'none';
     document.getElementById('pane-3').style.display = 'none';
     localStorage.setItem('Highscores', JSON.stringify(highscore))
-    for (var i = 0; i < highscore.length; i++) {
-      var h2 = document.createElement('h2');
-      console.log(highscore)
-      h2.textContent = highscore[i].name + " " + highscore[i].score;
-      leaderboard.appendChild(h2);
-    }
+    createLeaderboard()
   });
-};
+}
 
 
 function leaders() {
+  goback.style.display = 'unset'
   pane1.style.display = 'none';
   pane2.style.display = 'none';
   document.getElementById('pane-3').style.display = 'none';
   pane4.style.display = 'none';
   highscore = JSON.parse(localStorage.getItem('Highscores'));
+  createLeaderboard();
+};
+
+
+highscorebtn.addEventListener('click', leaders);
+goback.addEventListener('click', function () {
+  window.location.reload()
+});
+
+
+function createLeaderboard() {
+  highscore = JSON.parse(localStorage.getItem('Highscores'));
   for (var i = 0; i < highscore.length; i++) {
     var h2 = document.createElement('h2');
     h2.textContent = highscore[i].name + " " + highscore[i].score;
-    leaderboard.body.appendChild(h2);
-  };
-};
-
+    leaderboard.appendChild(h2);
+  }
+}
